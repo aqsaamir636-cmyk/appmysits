@@ -5,32 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Appmysits Official Store</title>
     <style>
+        * { box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; color: #333; }
-        header { background: #b71c1c; color: white; padding: 20px 15px; text-align: center; }
-        header h1 { margin: 0; font-size: 26px; }
+        header { background: #b71c1c; color: white; padding: 20px 12px; text-align: center; }
+        header h1 { margin: 0; font-size: 24px; }
+        header p { margin: 6px 0 0; font-size: 13px; }
         
-        /* فوٹو اور پراڈکٹ لگانے والا باکس (ہمیشہ کھلا ہوا) */
-        .add-box { max-width: 500px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid #b71c1c; text-align: right; }
-        .add-box h3 { margin: 0 0 10px; color: #b71c1c; font-size: 18px; }
-        .add-box input { width: 93%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        .add-box button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 8px; }
+        /* گیلری سے فوٹو لگانے والا باکس */
+        .add-box { width: 92%; max-width: 480px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid #b71c1c; text-align: right; }
+        .add-box h3 { margin: 0 0 10px; color: #b71c1c; font-size: 17px; }
+        .add-box input[type="text"], .add-box input[type="number"] { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        
+        /* گیلری بٹن کا ڈیزائن */
+        .gallery-label { display: block; width: 100%; background: #fff3e0; border: 2px dashed #e65100; color: #e65100; padding: 12px; text-align: center; border-radius: 6px; font-weight: bold; margin: 8px 0; cursor: pointer; font-size: 15px; }
+        .add-box input[type="file"] { display: none; }
+        #previewImg { width: 100%; max-height: 150px; object-fit: contain; display: none; margin: 8px 0; border-radius: 6px; }
+        
+        .add-box button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 6px; cursor: pointer; }
 
-        /* پراڈکٹ کے باکس */
-        .container { max-width: 900px; margin: 15px auto; padding: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        /* پراڈکٹ کے باکس (موبائل کے مطابق بالکل سیدھے) */
+        .container { width: 92%; max-width: 900px; margin: 15px auto; display: grid; grid-template-columns: 1fr; gap: 15px; }
+        @media (min-width: 600px) { .container { grid-template-columns: repeat(2, 1fr); } }
+        
         .product { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; border: 1px solid #ddd; }
-        .product img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; background: #eee; }
+        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #eee; }
         .product h3 { margin: 10px 0 5px; font-size: 18px; color: #222; }
         .price { font-size: 18px; font-weight: bold; color: #b71c1c; margin: 8px 0; }
-        .buy-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; text-decoration: none; cursor: pointer; box-sizing: border-box; }
+        .buy-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
 
         /* آرڈر فارم */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 88%; max-width: 400px; text-align: right; }
-        .modal-content input, .modal-content select, .modal-content textarea { width: 93%; padding: 10px; margin: 5px 0 10px; border: 1px solid #ccc; border-radius: 6px; }
+        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; text-align: right; }
+        .modal-content input, .modal-content select, .modal-content textarea { width: 100%; padding: 10px; margin: 5px 0 10px; border: 1px solid #ccc; border-radius: 6px; }
         .submit-order { width: 100%; background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; }
         .close-btn { float: left; font-size: 22px; font-weight: bold; color: #b71c1c; cursor: pointer; }
 
-        .policies { max-width: 880px; margin: 20px auto; background: white; padding: 15px; border-radius: 8px; font-size: 13px; line-height: 1.7; }
+        .policies { width: 92%; max-width: 900px; margin: 20px auto; background: white; padding: 15px; border-radius: 8px; font-size: 13px; line-height: 1.8; }
         footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 15px; font-size: 13px; }
     </style>
 </head>
@@ -41,16 +51,20 @@
     <p>کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)</p>
 </header>
 
-<!-- فوٹو اور پراڈکٹ لگانے والا باکس (پہلے سے کھلا ہوا) -->
+<!-- گیلری سے فوٹو لگانے والا باکس -->
 <div class="add-box">
-    <h3>➕ نئی پراڈکٹ اور فوٹو یہاں لگائیں</h3>
+    <h3>➕ نئی پراڈکٹ اور گیلری سے فوٹو لگائیں</h3>
     <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں">
     <input type="number" id="pPrice" placeholder="قیمت لکھیں (مثلاً: 850)">
-    <input type="text" id="pImg" placeholder="فوٹو کا لنک یہاں پیسٹ کریں">
+    
+    <label for="pFile" class="gallery-label">🖼️ یہاں دبائیں اور گیلری سے فوٹو چنیں</label>
+    <input type="file" id="pFile" accept="image/*" onchange="previewPhoto(event)">
+    <img id="previewImg" alt="منتخب فوٹو">
+    
     <button type="button" onclick="addProduct()">شاپ میں شامل کریں</button>
 </div>
 
-<!-- پراڈکٹ باکس اور آرڈر بٹن -->
+<!-- پراڈکٹ باکس -->
 <div class="container" id="productList">
     <div class="product">
         <img src="https://placehold.co" alt="لپ ٹنٹ">
@@ -95,11 +109,26 @@
 <script>
     var selectedName = "";
     var selectedPrice = "";
+    var uploadedImageSrc = "";
+
+    function previewPhoto(event) {
+        var file = event.target.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageSrc = e.target.result;
+                var imgEl = document.getElementById("previewImg");
+                imgEl.src = uploadedImageSrc;
+                imgEl.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    }
 
     function addProduct() {
         var name = document.getElementById("pName").value;
         var price = document.getElementById("pPrice").value;
-        var img = document.getElementById("pImg").value || "https://placehold.co";
+        var img = uploadedImageSrc || "https://placehold.co";
 
         if (!name || !price) {
             alert("پراڈکٹ کا نام اور قیمت لکھیں!");
@@ -113,7 +142,9 @@
 
         document.getElementById("pName").value = "";
         document.getElementById("pPrice").value = "";
-        document.getElementById("pImg").value = "";
+        document.getElementById("pFile").value = "";
+        document.getElementById("previewImg").style.display = "none";
+        uploadedImageSrc = "";
     }
 
     function openOrder(name, price) {
