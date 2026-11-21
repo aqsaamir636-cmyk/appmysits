@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appmysits Official Store - آن لائن شاپنگ</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; color: #333; }
+        .top-bar { background: #1a1a1a; color: #fff; font-size: 13px; padding: 8px 15px; text-align: center; }
+        header { background: linear-gradient(135deg, #b71c1c, #d32f2f); color: white; padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; font-size: 28px; }
+        header p { margin: 6px 0 0; font-size: 14px; }
+        
+        /* ایڈمن بٹن */
+        .admin-toggle { text-align: center; margin: 15px; }
+        .admin-btn { background: #333; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+        
+        /* نئی پراڈکٹ شامل کرنے کا باکس */
+        #adminPanel { display: none; max-width: 500px; margin: 15px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #b71c1c; }
+        #adminPanel h3 { margin-top: 0; color: #b71c1c; }
+        #adminPanel input { width: 94%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; }
+        #adminPanel button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+
+        /* پراڈکٹس کا گرڈ */
+        .container { max-width: 1000px; margin: 20px auto; padding: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .product { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: center; }
+        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #eee; }
+        .product h3 { margin: 12px 0 6px; font-size: 18px; color: #222; }
+        .price { font-size: 19px; font-weight: bold; color: #b71c1c; margin: 8px 0; }
+        .order-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 11px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        .del-btn { background: #ffebee; color: #c62828; border: 1px solid #c62828; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; margin-top: 8px; }
+
+        /* AI شاپنگ اسسٹنٹ */
+        .ai-box { max-width: 960px; margin: 20px auto; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: right; }
+        .ai-box h2 { color: #b71c1c; margin-top: 0; font-size: 20px; }
+        .chat-area { height: 130px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fafafa; margin-bottom: 10px; font-size: 14px; }
+        .chat-input { display: flex; gap: 10px; }
+        .chat-input input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .chat-input button { background: #b71c1c; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+        /* آرڈر فارم پاپ اپ */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 22px; border-radius: 12px; width: 90%; max-width: 420px; text-align: right; }
+        .modal-content h3 { margin-top: 0; color: #b71c1c; }
+        .modal-content input, .modal-content select, .modal-content textarea { width: 94%; padding: 10px; margin: 6px 0 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
+        .jazzcash-info { background: #fff8e1; border: 1px solid #ffb300; padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 12px; display: none; }
+        .submit-order { width: 100%; background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .close-btn { float: left; cursor: pointer; font-size: 20px; font-weight: bold; color: #666; }
+
+        /* پالیسی سیکشن (گوگل مرچنٹ سینٹر کے لیے لازمی) */
+        .policies { max-width: 960px; margin: 30px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; }
+        .policies h2 { color: #b71c1c; font-size: 20px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
+        footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 20px; font-size: 14px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    🚚 پورے پاکستان میں ڈیلیوری دستیاب | 💳 کیش آن ڈیلیوری (COD) اور جیز کیش (JazzCash) | 🔄 3 دن کی آسان واپسی پالیسی
+</div>
+
+<header>
+    <h1>Appmysits Official Store</h1>
+    <p>معیاری بیوٹی، میک اپ اور لائف اسٹائل پراڈکٹس — سیدھا آپ کے گھر کی دہلیز پر</p>
+</header>
+
+<div class="admin-toggle">
+    <button class="admin-btn" onclick="toggleAdmin()">➕ دکاندار مینیو: نئی پراڈکٹ / تصویر لگائیں</button>
+</div>
+
+<div id="adminPanel">
+    <h3>نئی پراڈکٹ شاپ میں شامل کریں</h3>
+    <p style="font-size:13px; color:#555;">مرکز ایپ یا دراز سے تصویر کا لنک کاپی کریں اور نیچے پیسٹ کریں:</p>
+    <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں (مثلاً: گلابی لپ اسٹک)">
+    <input type="number" id="pPrice" placeholder="اپنی قیمت لکھیں (صرف نمبر، مثلاً: 850)">
+    <input type="text" id="pImg" placeholder="تصویر کا لنک (Image URL) یہاں پیسٹ کریں">
+    <input type="text" id="pDesc" placeholder="مختصر تفصیل (مثلاً: بہترین کوالٹی)">
+    <button onclick="addProduct()">شاپ پر پبلش کریں</button>
+</div>
+
+<div class="container" id="productList"></div>
+
+<!-- AI شاپنگ اسسٹنٹ -->
+<div class="ai-box">
+    <h2>🤖 Appmysits AI اسسٹنٹ سے مدد لیں</h2>
+    <div class="chat-area" id="chatArea">
+        <p><strong>AI اسسٹنٹ:</strong> خوش آمدید! آپ مجھ سے قیمت، جیز کیش، کیش آن ڈیلیوری یا واپسی کی پالیسی کے بارے میں پوچھ سکتے ہیں۔</p>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="userInput" placeholder="یہاں اپنا سوال لکھیں (مثلاً: ادائیگی کیسے ہوگی؟)...">
+        <button onclick="askAI()">پوچھیں</button>
+    </div>
+</div>
+
+<!-- آرڈر فارم -->
+<div class="modal" id="orderModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">✖</span>
+        <h3>آرڈر مکمل کریں</h3>
+        <p id="selectedProductText" style="font-weight:bold; color:#1b5e20;"></p>
+        
+        <label>آپ کا پورا نام:</label>
+        <input type="text" id="custName" placeholder="اپنا نام لکھیں" required>
+        
+        <label>موبائل / واٹس ایپ نمبر:</label>
+        <input type="tel" id="custPhone" placeholder="03XXXXXXXXX" required>
+        
+        <label>مکمل پتہ (گھر نمبر، محلہ، شہر):</label>
+        <textarea id="custAddress" rows="2" placeholder="مکمل پتہ لکھیں تاکہ پارسل پہنچ سکے" required></textarea>
+        
+        <label>ادائیگی کا طریقہ (Payment Method):</label>
+        <select id="payMethod" onchange="checkPayment()">
+            <option value="کیش آن ڈیلیوری (COD)">کیش آن ڈیلیوری (پارسل ملنے پر پیسے دیں)</option>
+            <option value="جیز کیش (JazzCash)">جیز کیش (JazzCash ایڈوانس ادائیگی)</option>
+        </select>
+
+        <div class="jazzcash-info" id="jazzcashBox">
+            <strong>جیز کیش اکاؤنٹ نمبر:</strong> 0340-5101402<br>
+            رقم بھیج کر اسکرین شاٹ واٹس ایپ (0340-5101402) پر شیئر کریں۔
+        </div>
+
+        <button class="submit-order" onclick="sendOrder()">آرڈر کنفرم کریں (واٹس ایپ پر بھیجیں)</button>
+    </div>
+</div>
+
+<!-- پالیسی سیکشن -->
+<div class="policies">
+    <h2>📦 ڈیلیوری، واپسی (Return) اور ادائیگی کی پالیسی</h2>
+    <p><strong>1. ڈیلیوری کی معلومات:</strong> آرڈر کنفرم ہونے کے بعد 3 سے 5 کاروباری دنوں میں پارسل آپ کے دیے گئے پتے پر پہنچا دیا جاتا ہے۔</p>
+    <p><strong>2. واپسی اور تبدیلی (Return & Exchange):</strong> اگر آپ کو ٹوٹی ہوئی، خراب یا غلط پراڈکٹ موصول ہو، تو پارسل ملنے کے <strong>3 دن کے اندر</strong> ہمارے واٹس ایپ نمبر (0340-5101402) پر رابطہ کر کے پراڈکٹ واپس یا تبدیل کروائی جا سکتی ہے۔</p>
+    <p><strong>3. ادائیگی کے طریقے:</strong> ہم کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402) دونوں سہولیات فراہم کرتے ہیں۔</p>
+    <p><strong>4. دکان کا پتہ اور رابطہ:</strong> Appmysits Official Store، گجرات، پنجاب، پاکستان | واٹس ایپ: 0340-5101402</p>
+</div>
+
+<footer>
+    <p>© 2026 Appmysits Official Store - جملہ حقوق محفوظ ہیں</p>
+    <p>پتہ: گجرات، پاکستان | رابطہ و واٹس ایپ: 0340-5101402</p>
+</footer>
+
+<script>
+    const SHOP_WHATSAPP = "923405101402"; 
+
+    let products = JSON.parse(localStorage.getItem("appmysits_products")) || [
+        { name: "روز لپ اینڈ چیک ٹنٹ", price: 750, img: "https://placeholder.com", desc: "قدرتی گلابی نکھار اور دیرپا اثر" },
+        { name: "وٹامن سی گلو سیرم", price: 1150, img: "https://placeholder.com", desc: "صاف اور چمکدار جلد کے لیے" }
+    ];
+
+    let currentProduct = null;
+
+    function renderProducts() {
+        const list = document.getElementById("productList");
+        list.innerHTML = "";
+        products.forEach((p, index) => {
+            list.innerHTML += `
+                <div class="product">
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placeholder.com'">
+                    <h3>${p.name}</h3>
+                    <p style="font-size:14px; color:#666;">${p.desc}</p>
+                    <p class="price">قیمت: ${p.price} روپے</p>
+                    <button class="order-btn" onclick="openOrder(${index})">🛒 ابھی آرڈر کریں</button>
+                    <button class="del-btn" onclick="deleteProduct(${index})">حذف کریں</button>
+                </div>
+            `;
+        });
+    }
+
+    function toggleAdmin() {
