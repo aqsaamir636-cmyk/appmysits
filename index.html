@@ -3,92 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appmysits Official Store - آن لائن شاپنگ</title>
+    <title>Appmysits Official Store</title>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; color: #333; }
-        .top-bar { background: #1a1a1a; color: #fff; font-size: 13px; padding: 8px 15px; text-align: center; }
-        header { background: linear-gradient(135deg, #b71c1c, #d32f2f); color: white; padding: 25px 15px; text-align: center; }
-        header h1 { margin: 0; font-size: 28px; }
-        header p { margin: 6px 0 0; font-size: 14px; }
+        header { background: #b71c1c; color: white; padding: 20px 15px; text-align: center; }
+        header h1 { margin: 0; font-size: 26px; }
         
-        /* ایڈمن بٹن */
-        .admin-toggle { text-align: center; margin: 15px; }
-        .admin-btn { background: #333; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; }
-        
-        /* نئی پراڈکٹ شامل کرنے کا باکس */
-        #adminPanel { display: none; max-width: 500px; margin: 15px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 2px solid #b71c1c; }
-        #adminPanel h3 { margin-top: 0; color: #b71c1c; }
-        #adminPanel input { width: 94%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; }
-        #adminPanel button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        /* فوٹو اور پراڈکٹ لگانے والا باکس (ہمیشہ کھلا ہوا) */
+        .add-box { max-width: 500px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid #b71c1c; text-align: right; }
+        .add-box h3 { margin: 0 0 10px; color: #b71c1c; font-size: 18px; }
+        .add-box input { width: 93%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .add-box button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 8px; }
 
-        /* پراڈکٹس کا گرڈ */
-        .container { max-width: 1000px; margin: 20px auto; padding: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .product { background: white; border-radius: 12px; padding: 15px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: center; }
-        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #eee; }
-        .product h3 { margin: 12px 0 6px; font-size: 18px; color: #222; }
-        .price { font-size: 19px; font-weight: bold; color: #b71c1c; margin: 8px 0; }
-        .order-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 11px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; }
-        .del-btn { background: #ffebee; color: #c62828; border: 1px solid #c62828; padding: 4px 8px; border-radius: 4px; font-size: 12px; cursor: pointer; margin-top: 8px; }
+        /* پراڈکٹ کے باکس */
+        .container { max-width: 900px; margin: 15px auto; padding: 10px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .product { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; border: 1px solid #ddd; }
+        .product img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; background: #eee; }
+        .product h3 { margin: 10px 0 5px; font-size: 18px; color: #222; }
+        .price { font-size: 18px; font-weight: bold; color: #b71c1c; margin: 8px 0; }
+        .buy-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; text-decoration: none; cursor: pointer; box-sizing: border-box; }
 
-        /* AI شاپنگ اسسٹنٹ */
-        .ai-box { max-width: 960px; margin: 20px auto; background: white; border-radius: 12px; padding: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.08); text-align: right; }
-        .ai-box h2 { color: #b71c1c; margin-top: 0; font-size: 20px; }
-        .chat-area { height: 130px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background: #fafafa; margin-bottom: 10px; font-size: 14px; }
-        .chat-input { display: flex; gap: 10px; }
-        .chat-input input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-        .chat-input button { background: #b71c1c; color: white; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        /* آرڈر فارم */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 88%; max-width: 400px; text-align: right; }
+        .modal-content input, .modal-content select, .modal-content textarea { width: 93%; padding: 10px; margin: 5px 0 10px; border: 1px solid #ccc; border-radius: 6px; }
+        .submit-order { width: 100%; background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; }
+        .close-btn { float: left; font-size: 22px; font-weight: bold; color: #b71c1c; cursor: pointer; }
 
-        /* آرڈر فارم پاپ اپ */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 22px; border-radius: 12px; width: 90%; max-width: 420px; text-align: right; }
-        .modal-content h3 { margin-top: 0; color: #b71c1c; }
-        .modal-content input, .modal-content select, .modal-content textarea { width: 94%; padding: 10px; margin: 6px 0 12px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; }
-        .jazzcash-info { background: #fff8e1; border: 1px solid #ffb300; padding: 10px; border-radius: 6px; font-size: 13px; margin-bottom: 12px; display: none; }
-        .submit-order { width: 100%; background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
-        .close-btn { float: left; cursor: pointer; font-size: 20px; font-weight: bold; color: #666; }
-
-        /* پالیسی سیکشن (گوگل مرچنٹ سینٹر کے لیے لازمی) */
-        .policies { max-width: 960px; margin: 30px auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.8; }
-        .policies h2 { color: #b71c1c; font-size: 20px; border-bottom: 2px solid #eee; padding-bottom: 8px; }
-        footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 20px; font-size: 14px; line-height: 1.8; }
+        .policies { max-width: 880px; margin: 20px auto; background: white; padding: 15px; border-radius: 8px; font-size: 13px; line-height: 1.7; }
+        footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 15px; font-size: 13px; }
     </style>
 </head>
 <body>
 
-<div class="top-bar">
-    🚚 پورے پاکستان میں ڈیلیوری دستیاب | 💳 کیش آن ڈیلیوری (COD) اور جیز کیش (JazzCash) | 🔄 3 دن کی آسان واپسی پالیسی
-</div>
-
 <header>
     <h1>Appmysits Official Store</h1>
-    <p>معیاری بیوٹی، میک اپ اور لائف اسٹائل پراڈکٹس — سیدھا آپ کے گھر کی دہلیز پر</p>
+    <p>کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)</p>
 </header>
 
-<div class="admin-toggle">
-    <button class="admin-btn" onclick="toggleAdmin()">➕ دکاندار مینیو: نئی پراڈکٹ / تصویر لگائیں</button>
+<!-- فوٹو اور پراڈکٹ لگانے والا باکس (پہلے سے کھلا ہوا) -->
+<div class="add-box">
+    <h3>➕ نئی پراڈکٹ اور فوٹو یہاں لگائیں</h3>
+    <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں">
+    <input type="number" id="pPrice" placeholder="قیمت لکھیں (مثلاً: 850)">
+    <input type="text" id="pImg" placeholder="فوٹو کا لنک یہاں پیسٹ کریں">
+    <button type="button" onclick="addProduct()">شاپ میں شامل کریں</button>
 </div>
 
-<div id="adminPanel">
-    <h3>نئی پراڈکٹ شاپ میں شامل کریں</h3>
-    <p style="font-size:13px; color:#555;">مرکز ایپ یا دراز سے تصویر کا لنک کاپی کریں اور نیچے پیسٹ کریں:</p>
-    <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں (مثلاً: گلابی لپ اسٹک)">
-    <input type="number" id="pPrice" placeholder="اپنی قیمت لکھیں (صرف نمبر، مثلاً: 850)">
-    <input type="text" id="pImg" placeholder="تصویر کا لنک (Image URL) یہاں پیسٹ کریں">
-    <input type="text" id="pDesc" placeholder="مختصر تفصیل (مثلاً: بہترین کوالٹی)">
-    <button onclick="addProduct()">شاپ پر پبلش کریں</button>
-</div>
-
-<div class="container" id="productList"></div>
-
-<!-- AI شاپنگ اسسٹنٹ -->
-<div class="ai-box">
-    <h2>🤖 Appmysits AI اسسٹنٹ سے مدد لیں</h2>
-    <div class="chat-area" id="chatArea">
-        <p><strong>AI اسسٹنٹ:</strong> خوش آمدید! آپ مجھ سے قیمت، جیز کیش، کیش آن ڈیلیوری یا واپسی کی پالیسی کے بارے میں پوچھ سکتے ہیں۔</p>
+<!-- پراڈکٹ باکس اور آرڈر بٹن -->
+<div class="container" id="productList">
+    <div class="product">
+        <img src="https://placehold.co" alt="لپ ٹنٹ">
+        <h3>روز لپ اینڈ چیک ٹنٹ</h3>
+        <p class="price">قیمت: 750 روپے</p>
+        <button type="button" class="buy-btn" onclick="openOrder('روز لپ اینڈ چیک ٹنٹ', 750)">🛒 ابھی آرڈر کریں (Buy Now)</button>
     </div>
-    <div class="chat-input">
-        <input type="text" id="userInput" placeholder="یہاں اپنا سوال لکھیں (مثلاً: ادائیگی کیسے ہوگی؟)...">
-        <button onclick="askAI()">پوچھیں</button>
+
+    <div class="product">
+        <img src="https://placehold.co" alt="گلو سیرم">
+        <h3>وٹامن سی گلو سیرم</h3>
+        <p class="price">قیمت: 1150 روپے</p>
+        <button type="button" class="buy-btn" onclick="openOrder('وٹامن سی گلو سیرم', 1150)">🛒 ابھی آرڈر کریں (Buy Now)</button>
     </div>
 </div>
 
@@ -96,72 +71,78 @@
 <div class="modal" id="orderModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">✖</span>
-        <h3>آرڈر مکمل کریں</h3>
+        <h3 style="margin-top:0; color:#b71c1c;">آرڈر فارم</h3>
         <p id="selectedProductText" style="font-weight:bold; color:#1b5e20;"></p>
-        
-        <label>آپ کا پورا نام:</label>
-        <input type="text" id="custName" placeholder="اپنا نام لکھیں" required>
-        
-        <label>موبائل / واٹس ایپ نمبر:</label>
-        <input type="tel" id="custPhone" placeholder="03XXXXXXXXX" required>
-        
-        <label>مکمل پتہ (گھر نمبر، محلہ، شہر):</label>
-        <textarea id="custAddress" rows="2" placeholder="مکمل پتہ لکھیں تاکہ پارسل پہنچ سکے" required></textarea>
-        
-        <label>ادائیگی کا طریقہ (Payment Method):</label>
-        <select id="payMethod" onchange="checkPayment()">
-            <option value="کیش آن ڈیلیوری (COD)">کیش آن ڈیلیوری (پارسل ملنے پر پیسے دیں)</option>
-            <option value="جیز کیش (JazzCash)">جیز کیش (JazzCash ایڈوانس ادائیگی)</option>
+        <input type="text" id="custName" placeholder="آپ کا نام">
+        <input type="tel" id="custPhone" placeholder="موبائل نمبر (03XXXXXXXXX)">
+        <textarea id="custAddress" rows="2" placeholder="مکمل پتہ (گھر نمبر، شہر)"></textarea>
+        <select id="payMethod">
+            <option value="کیش آن ڈیلیوری (COD)">کیش آن ڈیلیوری (COD)</option>
+            <option value="جیز کیش (0340-5101402)">جیز کیش (0340-5101402)</option>
         </select>
-
-        <div class="jazzcash-info" id="jazzcashBox">
-            <strong>جیز کیش اکاؤنٹ نمبر:</strong> 0340-5101402<br>
-            رقم بھیج کر اسکرین شاٹ واٹس ایپ (0340-5101402) پر شیئر کریں۔
-        </div>
-
-        <button class="submit-order" onclick="sendOrder()">آرڈر کنفرم کریں (واٹس ایپ پر بھیجیں)</button>
+        <button type="button" class="submit-order" onclick="sendOrder()">واٹس ایپ پر آرڈر بھیجیں</button>
     </div>
 </div>
 
-<!-- پالیسی سیکشن -->
 <div class="policies">
-    <h2>📦 ڈیلیوری، واپسی (Return) اور ادائیگی کی پالیسی</h2>
-    <p><strong>1. ڈیلیوری کی معلومات:</strong> آرڈر کنفرم ہونے کے بعد 3 سے 5 کاروباری دنوں میں پارسل آپ کے دیے گئے پتے پر پہنچا دیا جاتا ہے۔</p>
-    <p><strong>2. واپسی اور تبدیلی (Return & Exchange):</strong> اگر آپ کو ٹوٹی ہوئی، خراب یا غلط پراڈکٹ موصول ہو، تو پارسل ملنے کے <strong>3 دن کے اندر</strong> ہمارے واٹس ایپ نمبر (0340-5101402) پر رابطہ کر کے پراڈکٹ واپس یا تبدیل کروائی جا سکتی ہے۔</p>
-    <p><strong>3. ادائیگی کے طریقے:</strong> ہم کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402) دونوں سہولیات فراہم کرتے ہیں۔</p>
-    <p><strong>4. دکان کا پتہ اور رابطہ:</strong> Appmysits Official Store، گجرات، پنجاب، پاکستان | واٹس ایپ: 0340-5101402</p>
+    <strong>پالیسی و رابطہ:</strong> ڈیلیوری 3 سے 5 دن میں ہوگی۔ خراب پراڈکٹ 3 دن کے اندر واپس یا تبدیل ہو سکتی ہے۔ ادائیگی: کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)۔ پتہ: گجرات، پاکستان۔
 </div>
 
 <footer>
-    <p>© 2026 Appmysits Official Store - جملہ حقوق محفوظ ہیں</p>
-    <p>پتہ: گجرات، پاکستان | رابطہ و واٹس ایپ: 0340-5101402</p>
+    © 2026 Appmysits Official Store | واٹس ایپ: 0340-5101402
 </footer>
 
 <script>
-    const SHOP_WHATSAPP = "923405101402"; 
+    var selectedName = "";
+    var selectedPrice = "";
 
-    let products = JSON.parse(localStorage.getItem("appmysits_products")) || [
-        { name: "روز لپ اینڈ چیک ٹنٹ", price: 750, img: "https://placeholder.com", desc: "قدرتی گلابی نکھار اور دیرپا اثر" },
-        { name: "وٹامن سی گلو سیرم", price: 1150, img: "https://placeholder.com", desc: "صاف اور چمکدار جلد کے لیے" }
-    ];
+    function addProduct() {
+        var name = document.getElementById("pName").value;
+        var price = document.getElementById("pPrice").value;
+        var img = document.getElementById("pImg").value || "https://placehold.co";
 
-    let currentProduct = null;
+        if (!name || !price) {
+            alert("پراڈکٹ کا نام اور قیمت لکھیں!");
+            return;
+        }
 
-    function renderProducts() {
-        const list = document.getElementById("productList");
-        list.innerHTML = "";
-        products.forEach((p, index) => {
-            list.innerHTML += `
-                <div class="product">
-                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://placeholder.com'">
-                    <h3>${p.name}</h3>
-                    <p style="font-size:14px; color:#666;">${p.desc}</p>
-                    <p class="price">قیمت: ${p.price} روپے</p>
-                    <button class="order-btn" onclick="openOrder(${index})">🛒 ابھی آرڈر کریں</button>
-                    <button class="del-btn" onclick="deleteProduct(${index})">حذف کریں</button>
-                </div>
-            `;
-        });
+        var box = document.createElement("div");
+        box.className = "product";
+        box.innerHTML = '<img src="' + img + '"><h3>' + name + '</h3><p class="price">قیمت: ' + price + ' روپے</p><button type="button" class="buy-btn" onclick="openOrder(\'' + name + '\', ' + price + ')">🛒 ابھی آرڈر کریں (Buy Now)</button>';
+        document.getElementById("productList").prepend(box);
+
+        document.getElementById("pName").value = "";
+        document.getElementById("pPrice").value = "";
+        document.getElementById("pImg").value = "";
     }
 
-    function toggleAdmin() {
+    function openOrder(name, price) {
+        selectedName = name;
+        selectedPrice = price;
+        document.getElementById("selectedProductText").innerText = name + " - " + price + " روپے";
+        document.getElementById("orderModal").style.display = "flex";
+    }
+
+    function closeModal() {
+        document.getElementById("orderModal").style.display = "none";
+    }
+
+    function sendOrder() {
+        var cName = document.getElementById("custName").value;
+        var cPhone = document.getElementById("custPhone").value;
+        var cAddr = document.getElementById("custAddress").value;
+        var pay = document.getElementById("payMethod").value;
+
+        if (!cName || !cPhone || !cAddr) {
+            alert("نام، نمبر اور پتہ لکھیں!");
+            return;
+        }
+
+        var text = "نیا آرڈر (Appmysits):%0Aپراڈکٹ: " + selectedName + "%0Aقیمت: " + selectedPrice + " روپے%0Aنام: " + cName + "%0Aفون: " + cPhone + "%0Aپتہ: " + cAddr + "%0Aادائیگی: " + pay;
+        window.open("https://wa.me" + text, "_blank");
+        closeModal();
+    }
+</script>
+
+</body>
+</html>
