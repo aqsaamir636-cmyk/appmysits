@@ -11,19 +11,19 @@
         header h1 { margin: 0; font-size: 24px; }
         header p { margin: 6px 0 0; font-size: 13px; }
         
-        /* گیلری سے فوٹو لگانے والا باکس */
+        /* گیلری اور گوگل فوٹوز سے تصویر لگانے والا باکس */
         .add-box { width: 92%; max-width: 480px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid #b71c1c; text-align: right; }
         .add-box h3 { margin: 0 0 10px; color: #b71c1c; font-size: 17px; }
         .add-box input[type="text"], .add-box input[type="number"] { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
         
-        /* گیلری بٹن کا ڈیزائن */
-        .gallery-label { display: block; width: 100%; background: #fff3e0; border: 2px dashed #e65100; color: #e65100; padding: 12px; text-align: center; border-radius: 6px; font-weight: bold; margin: 8px 0; cursor: pointer; font-size: 15px; }
+        /* گیلری کھولنے والا بڑا نارنجی بٹن */
+        .gallery-btn { display: block; width: 100%; background: #fff3e0; border: 2px dashed #e65100; color: #e65100; padding: 14px; text-align: center; border-radius: 8px; font-weight: bold; margin: 10px 0; cursor: pointer; font-size: 15px; }
         .add-box input[type="file"] { display: none; }
-        #previewImg { width: 100%; max-height: 150px; object-fit: contain; display: none; margin: 8px 0; border-radius: 6px; }
+        #previewImg { width: 100%; max-height: 160px; object-fit: contain; display: none; margin: 8px 0; border-radius: 6px; border: 1px solid #ddd; }
         
-        .add-box button { width: 100%; background: #1b5e20; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 6px; cursor: pointer; }
+        .save-btn { width: 100%; background: #1b5e20; color: white; border: none; padding: 13px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 6px; cursor: pointer; }
 
-        /* پراڈکٹ کے باکس (موبائل کے مطابق بالکل سیدھے) */
+        /* پراڈکٹ کے باکس */
         .container { width: 92%; max-width: 900px; margin: 15px auto; display: grid; grid-template-columns: 1fr; gap: 15px; }
         @media (min-width: 600px) { .container { grid-template-columns: repeat(2, 1fr); } }
         
@@ -51,17 +51,17 @@
     <p>کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)</p>
 </header>
 
-<!-- گیلری سے فوٹو لگانے والا باکس -->
+<!-- گیلری اور گوگل فوٹوز سے تصویر چننے والا باکس -->
 <div class="add-box">
     <h3>➕ نئی پراڈکٹ اور گیلری سے فوٹو لگائیں</h3>
     <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں">
     <input type="number" id="pPrice" placeholder="قیمت لکھیں (مثلاً: 850)">
     
-    <label for="pFile" class="gallery-label">🖼️ یہاں دبائیں اور گیلری سے فوٹو چنیں</label>
+    <label for="pFile" class="gallery-btn">🖼️ یہاں ٹچ کریں: گیلری یا گوگل فوٹوز کھولیں</label>
     <input type="file" id="pFile" accept="image/*" onchange="previewPhoto(event)">
     <img id="previewImg" alt="منتخب فوٹو">
     
-    <button type="button" onclick="addProduct()">شاپ میں شامل کریں</button>
+    <button type="button" class="save-btn" onclick="addProduct()">شاپ میں شامل کریں</button>
 </div>
 
 <!-- پراڈکٹ باکس -->
