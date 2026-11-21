@@ -3,177 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appmysits Official Store</title>
+    <title>Appmysits - Beauty & Skincare Store</title>
     <style>
         * { box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background-color: #f4f6f9; margin: 0; padding: 0; color: #333; }
-        header { background: #b71c1c; color: white; padding: 20px 12px; text-align: center; }
-        header h1 { margin: 0; font-size: 24px; }
-        header p { margin: 6px 0 0; font-size: 13px; }
+        body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; background-color: #ffffff; margin: 0; padding: 0; color: #222; }
         
-        /* گیلری اور گوگل فوٹوز سے تصویر لگانے والا باکس */
-        .add-box { width: 92%; max-width: 480px; margin: 15px auto; background: #fff; padding: 15px; border-radius: 10px; border: 2px solid #b71c1c; text-align: right; }
-        .add-box h3 { margin: 0 0 10px; color: #b71c1c; font-size: 17px; }
-        .add-box input[type="text"], .add-box input[type="number"] { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        /* اوپر والی باریک پٹی (Skingenix جیسی) */
+        .top-announcement { background-color: #1b4332; color: #ffffff; text-align: center; font-size: 12px; padding: 8px 10px; letter-spacing: 0.5px; }
         
-        /* گیلری کھولنے والا بڑا نارنجی بٹن */
-        .gallery-btn { display: block; width: 100%; background: #fff3e0; border: 2px dashed #e65100; color: #e65100; padding: 14px; text-align: center; border-radius: 8px; font-weight: bold; margin: 10px 0; cursor: pointer; font-size: 15px; }
-        .add-box input[type="file"] { display: none; }
-        #previewImg { width: 100%; max-height: 160px; object-fit: contain; display: none; margin: 8px 0; border-radius: 6px; border: 1px solid #ddd; }
-        
-        .save-btn { width: 100%; background: #1b5e20; color: white; border: none; padding: 13px; border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 6px; cursor: pointer; }
+        /* صاف ستھرا ہیڈر (بغیر کسی نمبر کے) */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .brand-name { font-size: 22px; font-weight: bold; color: #2d6a4f; letter-spacing: 0.5px; }
+        .nav-icons { font-size: 18px; color: #333; display: flex; gap: 14px; }
 
-        /* پراڈکٹ کے باکس */
-        .container { width: 92%; max-width: 900px; margin: 15px auto; display: grid; grid-template-columns: 1fr; gap: 15px; }
-        @media (min-width: 600px) { .container { grid-template-columns: repeat(2, 1fr); } }
-        
-        .product { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center; border: 1px solid #ddd; }
-        .product img { width: 100%; height: 200px; object-fit: cover; border-radius: 8px; background: #eee; }
-        .product h3 { margin: 10px 0 5px; font-size: 18px; color: #222; }
-        .price { font-size: 18px; font-weight: bold; color: #b71c1c; margin: 8px 0; }
-        .buy-btn { display: block; width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        /* بڑا دلکش بینر (Hero Banner) */
+        .hero { background: linear-gradient(135deg, #d8f3dc 0%, #b7e4c7 100%); padding: 35px 20px; text-align: center; }
+        .hero h2 { margin: 0 0 10px; font-size: 26px; color: #1b4332; }
+        .hero p { margin: 0 0 18px; font-size: 14px; color: #2d6a4f; }
+        .hero-btn { display: inline-block; background: #1b4332; color: #fff; padding: 10px 24px; border-radius: 25px; text-decoration: none; font-size: 14px; font-weight: bold; }
+
+        /* سیکشن ہیڈنگ */
+        .section-title { text-align: center; font-size: 20px; margin: 28px 0 15px; color: #1b4332; font-weight: bold; }
+
+        /* پراڈکٹس کا صاف ستھرا گرڈ */
+        .container { width: 92%; max-width: 900px; margin: 0 auto 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .product { background: #fff; border-radius: 12px; padding: 12px; border: 1px solid #eee; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.04); }
+        .product img { width: 100%; height: 165px; object-fit: cover; border-radius: 8px; background: #f8f9fa; }
+        .product h3 { margin: 10px 0 4px; font-size: 15px; color: #222; }
+        .price { font-size: 15px; font-weight: bold; color: #2d6a4f; margin: 4px 0 10px; }
+        .buy-btn { display: block; width: 100%; background: #1b4332; color: white; border: none; padding: 9px; border-radius: 6px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .del-link { display: none; color: #c62828; font-size: 11px; margin-top: 6px; cursor: pointer; background: none; border: none; }
+
+        /* دکاندار کے لیے چھپا ہوا باکس (عام گاہک کو نظر نہیں آئے گا) */
+        #adminBox { display: none; width: 92%; max-width: 450px; margin: 15px auto; background: #f8f9fa; padding: 15px; border-radius: 10px; border: 1px solid #2d6a4f; text-align: right; }
+        #adminBox h4 { margin: 0 0 10px; color: #1b4332; }
+        #adminBox input[type="text"], #adminBox input[type="number"] { width: 100%; padding: 9px; margin: 5px 0; border: 1px solid #ccc; border-radius: 6px; }
+        .gallery-btn { display: block; width: 100%; background: #d8f3dc; border: 1px dashed #1b4332; color: #1b4332; padding: 11px; text-align: center; border-radius: 6px; font-weight: bold; margin: 8px 0; cursor: pointer; font-size: 14px; }
+        #adminBox input[type="file"] { display: none; }
+        #previewImg { width: 100%; max-height: 140px; object-fit: contain; display: none; margin: 6px 0; }
+        .save-btn { width: 100%; background: #1b4332; color: white; border: none; padding: 11px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; }
 
         /* آرڈر فارم */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 1000; }
-        .modal-content { background: white; padding: 20px; border-radius: 10px; width: 90%; max-width: 400px; text-align: right; }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 20px; border-radius: 12px; width: 90%; max-width: 380px; text-align: right; }
         .modal-content input, .modal-content select, .modal-content textarea { width: 100%; padding: 10px; margin: 5px 0 10px; border: 1px solid #ccc; border-radius: 6px; }
-        .submit-order { width: 100%; background: #b71c1c; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; }
-        .close-btn { float: left; font-size: 22px; font-weight: bold; color: #b71c1c; cursor: pointer; }
+        .submit-order { width: 100%; background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; }
+        .close-btn { float: left; font-size: 20px; font-weight: bold; color: #666; cursor: pointer; }
 
-        .policies { width: 92%; max-width: 900px; margin: 20px auto; background: white; padding: 15px; border-radius: 8px; font-size: 13px; line-height: 1.8; }
-        footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 15px; font-size: 13px; }
+        /* کونے میں تیرتا ہوا سبز واٹس ایپ بٹن (Skingenix جیسا) */
+        .floating-wa { position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 56px; height: 56px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.25); text-decoration: none; z-index: 999; font-size: 28px; }
+
+        /* پالیسی اور فوٹر (بغیر فون نمبر دکھائے) */
+        .policies { width: 92%; max-width: 900px; margin: 10px auto 25px; background: #f8f9fa; padding: 14px; border-radius: 8px; font-size: 12px; color: #555; line-height: 1.7; text-align: center; }
+        footer { background: #1b4332; color: #d8f3dc; text-align: center; padding: 16px; font-size: 12px; }
+        .secret-admin-trigger { background: none; border: none; color: #95d5b2; font-size: 12px; cursor: pointer; margin-top: 6px; text-decoration: underline; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Appmysits Official Store</h1>
-    <p>کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)</p>
-</header>
+<div class="top-announcement">
+    ✨ پورے پاکستان میں کیش آن ڈیلیوری (COD) اور جیز کیش سہولت دستیاب ہے ✨
+</div>
 
-<!-- گیلری اور گوگل فوٹوز سے تصویر چننے والا باکس -->
-<div class="add-box">
-    <h3>➕ نئی پراڈکٹ اور گیلری سے فوٹو لگائیں</h3>
+<nav>
+    <div class="nav-icons">☰</div>
+    <div class="brand-name">appmysits⁺</div>
+    <div class="nav-icons">🔍 🛍️</div>
+</nav>
+
+<div class="hero">
+    <h2>خوبصورتی اور نکھار کا نیا انداز</h2>
+    <p>معیاری بیوٹی، اسکن کیئر اور لائف اسٹائل پراڈکٹس — اب آپ کی دہلیز پر</p>
+    <a href="#productList" class="hero-btn">خریداری شروع کریں</a>
+</div>
+
+<!-- دکاندار کے لیے چھپا ہوا فوٹو اپ لوڈ باکس (صرف نیچے سیٹنگ دبانے پر کھلے گا) -->
+<div id="adminBox">
+    <h4>➕ نئی پراڈکٹ اور گیلری سے فوٹو لگائیں</h4>
     <input type="text" id="pName" placeholder="پراڈکٹ کا نام لکھیں">
     <input type="number" id="pPrice" placeholder="قیمت لکھیں (مثلاً: 850)">
-    
-    <label for="pFile" class="gallery-btn">🖼️ یہاں ٹچ کریں: گیلری یا گوگل فوٹوز کھولیں</label>
+    <label for="pFile" class="gallery-btn">🖼️ گیلری یا گوگل فوٹوز سے تصویر چنیں</label>
     <input type="file" id="pFile" accept="image/*" onchange="previewPhoto(event)">
-    <img id="previewImg" alt="منتخب فوٹو">
-    
-    <button type="button" class="save-btn" onclick="addProduct()">شاپ میں شامل کریں</button>
+    <img id="previewImg" alt="منتخب تصویر">
+    <button type="button" class="save-btn" onclick="addProduct()">شاپ میں محفوظ کریں</button>
 </div>
 
-<!-- پراڈکٹ باکس -->
-<div class="container" id="productList">
-    <div class="product">
-        <img src="https://placehold.co" alt="لپ ٹنٹ">
-        <h3>روز لپ اینڈ چیک ٹنٹ</h3>
-        <p class="price">قیمت: 750 روپے</p>
-        <button type="button" class="buy-btn" onclick="openOrder('روز لپ اینڈ چیک ٹنٹ', 750)">🛒 ابھی آرڈر کریں (Buy Now)</button>
-    </div>
+<div class="section-title">Shop Your Favorites</div>
 
-    <div class="product">
-        <img src="https://placehold.co" alt="گلو سیرم">
-        <h3>وٹامن سی گلو سیرم</h3>
-        <p class="price">قیمت: 1150 روپے</p>
-        <button type="button" class="buy-btn" onclick="openOrder('وٹامن سی گلو سیرم', 1150)">🛒 ابھی آرڈر کریں (Buy Now)</button>
-    </div>
-</div>
+<div class="container" id="productList"></div>
 
 <!-- آرڈر فارم -->
 <div class="modal" id="orderModal">
     <div class="modal-content">
         <span class="close-btn" onclick="closeModal()">✖</span>
-        <h3 style="margin-top:0; color:#b71c1c;">آرڈر فارم</h3>
-        <p id="selectedProductText" style="font-weight:bold; color:#1b5e20;"></p>
-        <input type="text" id="custName" placeholder="آپ کا نام">
-        <input type="tel" id="custPhone" placeholder="موبائل نمبر (03XXXXXXXXX)">
-        <textarea id="custAddress" rows="2" placeholder="مکمل پتہ (گھر نمبر، شہر)"></textarea>
+        <h3 style="margin-top:0; color:#1b4332;">آرڈر مکمل کریں</h3>
+        <p id="selectedProductText" style="font-weight:bold; color:#2d6a4f; font-size:14px;"></p>
+        <input type="text" id="custName" placeholder="آپ کا پورا نام">
+        <input type="tel" id="custPhone" placeholder="موبائل نمبر">
+        <textarea id="custAddress" rows="2" placeholder="مکمل پتہ (گھر نمبر، محلہ، شہر)"></textarea>
         <select id="payMethod">
             <option value="کیش آن ڈیلیوری (COD)">کیش آن ڈیلیوری (COD)</option>
-            <option value="جیز کیش (0340-5101402)">جیز کیش (0340-5101402)</option>
+            <option value="جیز کیش (JazzCash)">جیز کیش (JazzCash)</option>
         </select>
         <button type="button" class="submit-order" onclick="sendOrder()">واٹس ایپ پر آرڈر بھیجیں</button>
     </div>
 </div>
 
+<!-- کونے میں سبز واٹس ایپ بٹن (نمبر چھپا ہوا ہے) -->
+<a href="https://wa.me علیکم! مجھے Appmysits سے معلومات چاہیے" target="_blank" class="floating-wa" title="واٹس ایپ پر رابطہ کریں">💬</a>
+
 <div class="policies">
-    <strong>پالیسی و رابطہ:</strong> ڈیلیوری 3 سے 5 دن میں ہوگی۔ خراب پراڈکٹ 3 دن کے اندر واپس یا تبدیل ہو سکتی ہے۔ ادائیگی: کیش آن ڈیلیوری (COD) اور جیز کیش (0340-5101402)۔ پتہ: گجرات، پاکستان۔
+    <strong>ڈیلیوری اور واپسی کی پالیسی:</strong> آرڈر 3 سے 5 کاروباری دنوں میں پہنچایا جاتا ہے۔ خراب یا غلط پراڈکٹ موصول ہونے پر 3 دن کے اندر واپسی یا تبدیلی کی سہولت موجود ہے۔ ادائیگی: کیش آن ڈیلیوری اور جیز کیش۔ پتہ: گجرات، پاکستان۔
 </div>
 
 <footer>
-    © 2026 Appmysits Official Store | واٹس ایپ: 0340-5101402
+    <div>© 2026 Appmysits Official Store - تمام حقوق محفوظ ہیں</div>
+    <button type="button" class="secret-admin-trigger" onclick="toggleAdmin()">⚙️ دکاندار سیٹنگ (نئی فوٹو لگائیں)</button>
 </footer>
 
 <script>
+    // نمبر صرف کوڈ کے اندر چھپا ہوا ہے، ویب سائٹ پر نظر نہیں آئے گا
+    var WA_NUMBER = "923405101402";
     var selectedName = "";
     var selectedPrice = "";
     var uploadedImageSrc = "";
+    var adminMode = false;
 
-    function previewPhoto(event) {
-        var file = event.target.files[0];
-        if (file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                uploadedImageSrc = e.target.result;
-                var imgEl = document.getElementById("previewImg");
-                imgEl.src = uploadedImageSrc;
-                imgEl.style.display = "block";
-            };
-            reader.readAsDataURL(file);
+    // محفوظ شدہ پراڈکٹس لوڈ کریں
+    var defaultProducts = [
+        { name: "روز لپ اینڈ چیک ٹنٹ", price: 750, img: "https://placehold.co" },
+        { name: "وٹامن سی گلو سیرم", price: 1150, img: "https://placehold.co" }
+    ];
+
+    var products = JSON.parse(localStorage.getItem("appmysits_saved_items")) || defaultProducts;
+
+    function renderProducts() {
+        var list = document.getElementById("productList");
+        list.innerHTML = "";
+        for (var i = 0; i < products.length; i++) {
+            var p = products[i];
+            var delDisplay = adminMode ? "inline-block" : "none";
+            list.innerHTML += '<div class="product">' +
+                '<img src="' + p.img + '" alt="' + p.name + '">' +
+                '<h3>' + p.name + '</h3>' +
+                '<p class="price">Rs. ' + p.price + '</p>' +
+                '<button type="button" class="buy-btn" onclick="openOrder(\'' + p.name + '\', ' + p.price + ')">ابھی خریدیں</button>' +
+                '<button type="button" class="del-link" style="display:' + delDisplay + '" onclick="deleteProduct(' + i + ')">[ہٹائیں]</button>' +
+                '</div>';
         }
     }
 
-    function addProduct() {
-        var name = document.getElementById("pName").value;
-        var price = document.getElementById("pPrice").value;
-        var img = uploadedImageSrc || "https://placehold.co";
-
-        if (!name || !price) {
-            alert("پراڈکٹ کا نام اور قیمت لکھیں!");
-            return;
+    function toggleAdmin() {
+        adminMode = !adminMode;
+        document.getElementById("adminBox").style.display = adminMode ? "block" : "none";
+        renderProducts();
+        if (adminMode) {
+            document.getElementById("adminBox").scrollIntoView({ behavior: "smooth" });
         }
-
-        var box = document.createElement("div");
-        box.className = "product";
-        box.innerHTML = '<img src="' + img + '"><h3>' + name + '</h3><p class="price">قیمت: ' + price + ' روپے</p><button type="button" class="buy-btn" onclick="openOrder(\'' + name + '\', ' + price + ')">🛒 ابھی آرڈر کریں (Buy Now)</button>';
-        document.getElementById("productList").prepend(box);
-
-        document.getElementById("pName").value = "";
-        document.getElementById("pPrice").value = "";
-        document.getElementById("pFile").value = "";
-        document.getElementById("previewImg").style.display = "none";
-        uploadedImageSrc = "";
     }
 
-    function openOrder(name, price) {
-        selectedName = name;
-        selectedPrice = price;
-        document.getElementById("selectedProductText").innerText = name + " - " + price + " روپے";
-        document.getElementById("orderModal").style.display = "flex";
-    }
-
-    function closeModal() {
-        document.getElementById("orderModal").style.display = "none";
-    }
-
-    function sendOrder() {
-        var cName = document.getElementById("custName").value;
-        var cPhone = document.getElementById("custPhone").value;
-        var cAddr = document.getElementById("custAddress").value;
-        var pay = document.getElementById("payMethod").value;
-
-        if (!cName || !cPhone || !cAddr) {
-            alert("نام، نمبر اور پتہ لکھیں!");
-            return;
-        }
-
-        var text = "نیا آرڈر (Appmysits):%0Aپراڈکٹ: " + selectedName + "%0Aقیمت: " + selectedPrice + " روپے%0Aنام: " + cName + "%0Aفون: " + cPhone + "%0Aپتہ: " + cAddr + "%0Aادائیگی: " + pay;
-        window.open("https://wa.me" + text, "_blank");
-        closeModal();
-    }
-</script>
-
-</body>
-</html>
